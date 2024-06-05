@@ -1,6 +1,7 @@
 comps.settings = x => m('.container', [
+  m('h3', 'Pengaturan'),
   m('.box', [
-    m('h3', 'Pengaturan'),
+    m('h4', 'Tampilan'),
     m(autoForm({
       id: 'themeSelection',
       schema: {theme: {
@@ -32,7 +33,7 @@ comps.settings = x => m('.container', [
     }))
   ]),
   m('.box', [
-    m('h3', 'Backup & Restore'),
+    m('h4', 'Backup & Restore'),
     m('.ul', [
       m('li', 'Klik Backup dan dapatkan file .json'),
       m('li', 'Klik Restore dan berikan file .json')
@@ -55,5 +56,38 @@ comps.settings = x => m('.container', [
         onclick: x => alert('Restore is coming soon..')
       }, 'Restore')
     ])
-  ])
+  ]),
+  m('.box', [
+    m('h4', 'Profilku'),
+    m('p', 'Perkenalkan dirimu kepada AI untuk jawaban yang lebih personal. Abaikan form ini bila ingin tetap anonim dihadapan AI.'),
+    m(autoForm({
+      id: 'myProfile',
+      doc: JSON.parse(localStorage.myProfile || '{}'),
+      schema: {
+        name: {
+          type: String, label: 'Nama Lengkap',
+          optional: true
+        },
+        nick: {
+          type: String, label: 'Nama Panggilan',
+          optional: true
+        },
+        bio: {
+          type: String, label: 'Biodata',
+          autoform: {type: 'textarea'},
+          optional: true
+        }
+      },
+      submit: {value: 'Ingat aku'},
+      action: doc => [
+        localStorage.setItem('myProfile', JSON.stringify(doc)),
+        localStorage.setItem('greetings', withAs(
+          JSON.parse(localStorage.myProfile || '{}'),
+          ({nick, name}) => `Halo, ${ors([nick, name])}!`
+        )),
+        m.redraw()
+      ]
+    }))
+  ]),
+
 ])

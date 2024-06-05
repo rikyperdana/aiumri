@@ -340,7 +340,7 @@ autoForm = opts => ({view: () => {
 
       m('.field',
         attr.label(name, schema),
-        m('.control.is-loading', m('input.input', {
+        m('.control', m('input.input', {
           step: 'any', name: !schema.exclude ? name : '',
           placeholder: _.get(schema, 'autoform.placeholder'),
           value: ors([

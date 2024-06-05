@@ -95,7 +95,10 @@ mitGen = opts => ({view: () => m('div',
       [
         m('.content', mgState.comp ? mgState.comp() : [
           opts.above,
-          m('h1', 'Dashboard'),
+          m('h1', ors([
+            localStorage.greetings,
+            'Dashboard'
+          ])), m('br'),
           _.chunk(_.map(opts.start, (v, k) => [v, k]), 3).map(i =>
             m('.columns', i.map(j => m('.column',
               m('a.box', m('article.media',
