@@ -99,7 +99,7 @@ mitGen = opts => ({view: () => m('div',
             ${_.startCase(timeGreet(+(new Date())))},
             ${withAs(
               JSON.parse(localStorage.myProfile || '{}'),
-              ({nick, name}) => ors([nick, name])
+              ({nick, name}) => ors([nick, name, 'User'])
             )}!
           `), m('br'),
           _.chunk(_.map(opts.start, (v, k) => [v, k]), 3).map(i =>
