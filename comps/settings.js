@@ -34,6 +34,7 @@ comps.settings = x => m('.container', [
   ]),
   m('.box', [
     m('h4', 'Backup & Restore'),
+    m('p', 'Karena App ini tidak menggunakan DB di sisi server, maka pilihannya adalah backup dan restore apa yang ada di dalam browser.'),
     m('.ul', [
       m('li', 'Klik Backup dan dapatkan file .json'),
       m('li', 'Klik Restore dan berikan file .json')
@@ -48,9 +49,7 @@ comps.settings = x => m('.container', [
           }))],
           {type: 'text/plain;charset=utf-8'}
         ),
-        `Backup_AI_UMRI_${
-          (new Date()).toLocaleDateString('en-gb')
-        }.json`
+        `Backup AI UMRI ${(new Date()).toLocaleDateString('en-gb')}.json`
       )}, 'Backup'),
       m('.button.is-danger', {
         onclick: x => alert('Restore is coming soon..')
@@ -73,18 +72,16 @@ comps.settings = x => m('.container', [
           optional: true
         },
         bio: {
-          type: String, label: 'Biodata',
-          autoform: {type: 'textarea'},
-          optional: true
+          type: String, label: 'Biodata', optional: true,
+          autoform: {
+            type: 'textarea',
+            help: 'App ini tidak punya DB sisi server. Semua info diatas hanya ada dalam browser kamu, tepatnya di localStorage.'
+          },
         }
       },
       submit: {value: 'Ingat aku'},
       action: doc => [
         localStorage.setItem('myProfile', JSON.stringify(doc)),
-        localStorage.setItem('greetings', withAs(
-          JSON.parse(localStorage.myProfile || '{}'),
-          ({nick, name}) => `Halo, ${ors([nick, name])}!`
-        )),
         m.redraw()
       ]
     }))
