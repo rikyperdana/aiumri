@@ -31,6 +31,10 @@ comps.memories = x => m('.container', [
                 'threads',
                 JSON.stringify(content.threads)
               ),
+              localStorage.setItem(
+                'currentThreads',
+                JSON.stringify({...content, id})
+              ),
               Object.assign(mgState, {
                 comp: comps.aichat
               }),

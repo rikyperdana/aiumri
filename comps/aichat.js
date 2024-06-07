@@ -34,11 +34,10 @@ comps.aichat = x => m('.container', [
   state.aiModule && m(autoForm({
     id: 'aichat',
     schema: {message: {
-      type: String, label: 'Pertanyaan', optional: true,
+      type: String, label: 'Pertanyaan',
       autoform: {type: 'textarea', loading: state.isLoading},
     }},
     action: doc => withAs({
-      key: localStorage.geminiKey,
       threads: JSON.parse(localStorage.threads || '[]'),
       query: {...doc, role: 'user', requestTime: +(new Date())}
     }, ({threads, query, key}) => [
@@ -61,7 +60,7 @@ comps.aichat = x => m('.container', [
       ])
     ]),
     submit: {value: 'Kirim'},
-    buttons: [
+    buttons: localStorage.threads && [
       {label: 'Reset', opt: {
         class: 'is-warning',
         onclick: e => confirm('Yakin kosongkan percakapan?')
@@ -71,29 +70,33 @@ comps.aichat = x => m('.container', [
           m.redraw(), scroll(0, 0)
         ]
       }},
-      localStorage.threads && {label: 'Simpan', opt: {
+      {label: 'Simpan', opt: {
         class: 'is-success',
         onclick: e => [
           e.preventDefault(),
-          withAs(ors([
-            JSON.parse(localStorage.currentThreads || '[]')?.title,
-            prompt('Apa judul pembicaraan ini?'),
-          ]),
-          judul => [
-            localStorage.setItem(
-              'memories', JSON.stringify(Object.assign(
-                JSON.parse(localStorage.memories || '{}'),
-                {[ors([
-                  state.currentThreads?.id, randomId()])
-                ]: {title: judul, threads: ors([
+          localStorage.setItem(
+            'memories', JSON.stringify(Object.assign(
+              JSON.parse(localStorage.memories || '{}'),
+              {[ors([
+                JSON.parse(
+                  localStorage.currentThreads || '{}'
+                )?.id,
+                randomId()
+              ])]: {
+                title: (
+                  JSON.parse
+                    (localStorage.currentThreads || '{}'
+                  )?.title || prompt('Apa judul pembicaraan ini?')
+                ),
+                threads: ors([
                   state.currentThreads?.threads,
                   JSON.parse(localStorage.threads || '[]')
-                ])}}
-              ))
-            ),
-            Object.assign(mgState, {comp: comps.memories}),
-            m.redraw()
-          ])
+                ])
+              }}
+            ))
+          ),
+          Object.assign(mgState, {comp: comps.memories}),
+          m.redraw()
         ]
       }}
     ]
