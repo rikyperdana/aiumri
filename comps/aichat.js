@@ -4,7 +4,7 @@ import('https://esm.run/@google/generative-ai').then
 const
 randomId = x => Math.random().toString(36).slice(2),
 askGemini = (history, message, cb) =>
-  (new state.aiModule.GoogleGenerativeAI(randomAPI()))
+  (new state.aiModule.GoogleGenerativeAI(randomGemini()))
   .getGenerativeModel({model: 'gemini-1.5-flash'})
   .startChat({
     generateConfig: {maxOutputTokens: 100},
