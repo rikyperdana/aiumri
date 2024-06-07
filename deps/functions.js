@@ -1,6 +1,6 @@
 const
 between = (low, mid, high) =>
-  low <= mid || mid <= high,
+  low <= mid && mid <= high,
 
 timeGreet = timestamp =>
   Object.entries({
@@ -12,8 +12,8 @@ timeGreet = timestamp =>
     phase[1][1]
   ))?.[0] || 'Halo',
 
-randomAPI = x => [
-  'AIzaSyAJtBqTGbKE7CLz577pi2RUt1wXcNAL_wc',
-  'AIzaSyCMoGsXqVKSqH238t467wWDXX9dcCKaGuw',
-  'AIzaSyDMMY2UNQgsuaBr40RuIhJC90BofT1895A'
-][Math.floor(Math.random() * 3)]
+randomGemini = x => 'AIzaSy' + _.sample([
+  'AJtBqTGbKE7CLz577pi2RUt1wXcNAL_wc',
+  'CMoGsXqVKSqH238t467wWDXX9dcCKaGuw',
+  'DMMY2UNQgsuaBr40RuIhJC90BofT1895A'
+])
