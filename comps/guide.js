@@ -1,4 +1,5 @@
 const guides = [
+  // Kategori AI Chat
   {category: 'AI Chat', title: 'Cara pakai', content: `
     Buka menu AI Chat, ketikkan pesan atau pertanyaan yang ingin
     ditanyakan kepada AI. Simbol loading akan berputar dalam kotak
@@ -30,7 +31,52 @@ const guides = [
     kapasitas berbeda dalam menyimpan percakapan. Memori browser
     terbesar pertama adalah Opera, kedua Firefox, ketiga Chrome.
   `},
-  {category: 'AI Chat', title: 'Privasi & Keamanan', content: `
+  {category: 'AI Chat', title: 'Lama loading', content: `
+    Neural Processing Unit butuh waktu untuk menerima input,
+    mengolahnya, dan merancang jawaban yang relevan untuk diberikan
+    kepada user. AI pada dasarnya adalah AutoComplete versi canggih.
+    Semakin kompleks pertanyaan, semakin lama waktu yang dibutuhkan
+    server untuk mengembalikan respon. Waktu tunggu normal respon AI
+    pada aplikasi ini adalah sekitar 30 detik. Bila lebih lama dari
+    itu maka ada kemungkinan masalah jaringan atau lainnya.
+  `},
+  {category: 'AI Chat', title: 'AI Engine', content: `
+    Aplikasi ini menggunakan Public API key dari Google Gemini
+    Developer Studio. Versi yang digunakan adalah Google Gemini
+    1.5 Flash. Ini adalah model LLM yang ringan dan cepat untuk
+    memberikan respon kepada user, namun cukup cerdas untuk
+    mengetahui banyak hal dan mampu mengikuti konteks pembicaraan.
+    Kedepannya developer akan menambahkan pilihan model/otak baru
+    yaitu ChatGPT 3.5 Turbo dari OpenAI.
+  `},
+
+  // Kategori Setting
+  {category: 'Pengaturan', title: 'Backup/Restore', content: `
+    Aplikasi ini tidak menggunakan DB di sisi server, sehingga
+    user akan merasa aman bahwa datanya tidak disimpan pihak lain
+    di suatu tempat. Satu-satunya penyimpanan yang aplikasi ini
+    gunakan adalah localStorage atau memori internal browser yang
+    saat ini kamu gunakan. Bila browser ini dihapus dari perangkat
+    maka hilanglah semua memori percakapan yang pernah disimpan.
+    Maka dari itu aplikasi ini menyediakan fitur Backup agar user
+    dapat mengunduh file .json yang berisi semua memori tersebut.
+    Fitur Restore dapat digunakan untuk mengembalikan memori yang
+    lama ke browser baru di perangkat yang sama ataupun yang lain.
+  `},
+  {category: 'Pengaturan', title: 'Profilku', content: `
+    Ini adalah kolom informasi yang opsional, boleh diabaikan bila
+    user ingin tetap anonim/tanpa identitas ketika berinteraksi
+    dengan AI Chat. Namun bila diisi, maka saat mulai berinteraksi
+    AI bisa belajar tentang profil user yang sedang mengajak bicara
+    dan menyesuaikan gaya jawaban dengan user yang bertanya.
+    Algoritma penyesuaian ini adalah Retrieval-Augmented Generation,
+    sebuah algoritma yang memungkinkan AI menyesuaikan jawaban
+    kedepannya berdasarkan pengetahuan spesifik yang diberikan.
+    Silahkan pelajari sendiri.
+  `},
+
+  // Kategori Aplikasi
+  {category: 'Aplikasi', title: 'Privasi & Keamanan', content: `
     Aplikasi ini dirancang tidak memiliki database di sisi server.
     Semua memori yang tersimpan dalam browser kamu terletak dalam
     localStorage. Kelebihan skema ini 1) beban server kecil karena
@@ -40,6 +86,22 @@ const guides = [
     perangkat yang kamu gunakan, 2) tidak ada penyimpanan cloud, 3)
     backup data harus dilakukan manual. Silahkan cek source code
     aplikasi ini untuk melihat keseluruhan logika aplikasi.
+  `},
+  {category: 'Aplikasi', title: 'Software Update', content: `
+    Aplikasi ini berbasis web (duh!). Jadi update akan berlangsung
+    secara otomatis tanpa perlu perintah langsung dari user. Versi
+    terkini adalah 1.0.1 yang berarti aplikasi ini sudah siap untuk
+    digunakan dengan fitur yang ada, diupayakan bebas dari bugs,
+    dan akan senantiasa dipantau kualitasnya oleh developer.
+  `},
+  {category: 'Aplikasi', title: 'Lisensi Software', content: `
+    Aplikasi ini dirancang, dikembangkan, dan dipublikasikan secara
+    Open Source. Siapapun dipersilahkan untuk melihat, mengambil,
+    memodifikasi, dan mendistribusikan kembali source code aplikasi
+    ini untuk kebutuhan pendidikan. Sementara untuk kebutuhan bisnis,
+    silahkan hubungi pengembang untuk mendapatkan lisensi hak guna.
+    Source code aplikasi ini dapat dilihat di alamat repository
+    https://github.com/rikyperdana/aiumri
   `}
 ]
 
