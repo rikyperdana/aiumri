@@ -16,7 +16,7 @@ poster = (url, body, cb) => fetch(url, {
 }).then(res => res.json()).then(cb),
 
 mitGen = opts => ({view: () => m('div',
-  {class: 'has-background-light'},
+  // {class: 'has-background-light'},
   opts.theme && m('link', {
     rel: 'stylesheet',
     href: `https://unpkg.com/bulmaswatch/${opts.theme}/bulmaswatch.min.css`
