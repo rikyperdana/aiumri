@@ -22,9 +22,11 @@ comps.aichat = x => [
   // Threads of interactions
   JSON.parse(localStorage.threads || '[]')
   .map(thread => m(
-    `article.message${({
-      user: '', model: '.is-info'
-    })[thread.role]}`,
+    'article.message',
+    {class: [
+      thread.role === 'model' && 'is-primary',
+      localStorage.fontSize,
+    ].join(' ')},
     m('.message-body', m(
       'p.has-text-left',
       m.trust(markdown.toHTML(thread.message))
