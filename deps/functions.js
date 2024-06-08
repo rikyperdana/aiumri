@@ -15,5 +15,7 @@ timeGreet = timestamp =>
 randomGemini = x => 'AIzaSy' + _.sample([
   'AJtBqTGbKE7CLz577pi2RUt1wXcNAL_wc',
   'CMoGsXqVKSqH238t467wWDXX9dcCKaGuw',
-  'DMMY2UNQgsuaBr40RuIhJC90BofT1895A'
+  'DMMY2UNQgsuaBr40RuIhJC90BofT1895A',
+  'CIA-T4MXvjFTHHct8tr1WSAp_Nb67X7Ds',
+  'DsfU8jR854LxOkNnvAYlmOGFC1BMaDxko'
 ])
