@@ -42,7 +42,7 @@ comps.memories = x => m('.container', [
             ]
           }, 'Lanjut'),
           m('.button.is-small.is-rounded.is-danger', {
-            onclick: x => confirm('Yakin hapus percakapan ini?') &&
+            onclick: x => confirm('Yakin hapus percakapan ini?') && (
               withAs(JSON.parse(localStorage.memories), mems => [
                 delete mems[id],
                 localStorage.setItem(
@@ -50,6 +50,7 @@ comps.memories = x => m('.container', [
                 ),
                 m.redraw()
               ])
+            )
           }, 'Hapus')
         ])
       }

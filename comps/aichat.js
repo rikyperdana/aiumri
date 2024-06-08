@@ -3,6 +3,7 @@ import('https://esm.run/@google/generative-ai').then
 
 const
 randomId = x => Math.random().toString(36).slice(2),
+
 askGemini = (history, message, cb) =>
   (new state.aiModule.GoogleGenerativeAI(randomGemini()))
   .getGenerativeModel({model: 'gemini-1.5-flash'})
@@ -52,7 +53,7 @@ comps.aichat = x => m('.container', [
             ...JSON.parse(localStorage.threads || '[]'),
             {
               message: answer, role: 'model',
-              responseTiem: +(new Date())
+              responseTime: +(new Date())
             }
           ])
         ),
@@ -84,8 +85,8 @@ comps.aichat = x => m('.container', [
                 randomId()
               ])]: {
                 title: (
-                  JSON.parse
-                    (localStorage.currentThreads || '{}'
+                  JSON.parse(
+                    localStorage.currentThreads || '{}'
                   )?.title || prompt('Apa judul pembicaraan ini?')
                 ),
                 threads: ors([

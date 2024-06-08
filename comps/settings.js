@@ -82,7 +82,7 @@ comps.settings = x => m('.container', [
       submit: {value: 'Ingat aku'},
       action: doc => [
         localStorage.setItem('myProfile', JSON.stringify(doc)),
-        m.redraw()
+        m.redraw(), alert('Baik, akan diingat.')
       ]
     }))
   ]),
