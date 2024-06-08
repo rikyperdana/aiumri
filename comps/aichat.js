@@ -68,6 +68,7 @@ comps.aichat = x => [
         && [
           e.preventDefault(),
           localStorage.removeItem('threads'),
+          localStorage.removeItem('currentThreads'),
           m.redraw(), scroll(0, 0)
         ]
       }},

@@ -145,7 +145,7 @@ autoTable = opts => ({view: () => m('.box',
         new Blob(
           [[atModify(opts.rows, opts).map(
             i => _.values(i.row).join(';')
-          ).join('\n')]], 
+          ).join('\n')]],
           {type: 'text/csv;charset=utf-8;'}
         ), opts.export() + '.csv'
       )

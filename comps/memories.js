@@ -5,20 +5,27 @@ comps.memories = x => [
   m(autoTable({
     id: 'catatan',
     heads: {
-      tanggal: 'Mulai',
+      mulai: 'Mulai',
+      terbaru: 'Terbaru',
       tentang: 'Judul',
       trade: 'Interaksi',
       words: 'Panjang',
       aksi: 'Aksi'
     },
+    search: true,
+    onclick: console.log,
     rows: Object.entries(
       JSON.parse(localStorage.memories || '[]')
     ).map(([id, content]) => ({
       data: {...content, id},
       row: {
-        tanggal: new Date(
+        mulai: new Date(
           content.threads[0].requestTime
         ).toLocaleDateString('en-gb'),
+        terbaru: new Date(withAs(
+          _.last(content.threads),
+          last => ors([last.responseTime, last.requestTime])
+        )).toLocaleDateString('en-gb'),
         tentang: content.title,
         trade: content.threads.length + ' kali',
         words: sum(content.threads.map(
@@ -54,7 +61,6 @@ comps.memories = x => [
           }, 'Hapus')
         ])
       }
-    })),
-    onclick: console.log
+    }))
   }))
 ]
