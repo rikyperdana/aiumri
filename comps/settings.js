@@ -1,4 +1,4 @@
-comps.settings = x => m('.container', [
+comps.settings = x => [
   m('h3', 'Pengaturan'),
   m('.box', [
     m('h4', 'Tampilan'),
@@ -85,6 +85,5 @@ comps.settings = x => m('.container', [
         m.redraw(), alert('Baik, akan diingat.')
       ]
     }))
-  ]),
-
-])
+  ])
+]

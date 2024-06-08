@@ -43,7 +43,7 @@ const guides = [
   `}
 ]
 
-comps.guide = x => m('.container', [
+comps.guide = x => [
   m('h3', 'Panduan Aplikasi'),
   m(autoTable({
     id: 'faqs',
@@ -73,7 +73,7 @@ comps.guide = x => m('.container', [
       delete state.readGuide, m.redraw()
     ]})
   )
-])
+]
 
 /*
 makeModal = name => m('.modal',

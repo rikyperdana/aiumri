@@ -1,6 +1,6 @@
 const sum = arr => arr.reduce((a, b) => a + b)
 
-comps.memories = x => m('.container', [
+comps.memories = x => [
   m('h3', 'Memori Percakapan AI'),
   m(autoTable({
     id: 'catatan',
@@ -57,4 +57,4 @@ comps.memories = x => m('.container', [
     })),
     onclick: console.log
   }))
-])
+]

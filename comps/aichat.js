@@ -16,14 +16,14 @@ askGemini = (history, message, cb) =>
   }).sendMessage(message)
   .then(result => cb(result.response.text()))
 
-comps.aichat = x => m('.container', [
+comps.aichat = x => [
   m('h3', 'Mari berbincang'),
 
   // Threads of interactions
   JSON.parse(localStorage.threads || '[]')
   .map(thread => m(
-    `article.message.is-${({
-      user: 'primary', model: 'info'
+    `article.message${({
+      user: '', model: '.is-info'
     })[thread.role]}`,
     m('.message-body', m(
       'p.has-text-left',
@@ -102,4 +102,4 @@ comps.aichat = x => m('.container', [
       }}
     ]
   }))
-])
+]
