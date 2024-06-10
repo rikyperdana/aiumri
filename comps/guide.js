@@ -37,8 +37,10 @@ const guides = [
     kepada user. AI pada dasarnya adalah AutoComplete versi canggih.
     Semakin kompleks pertanyaan, semakin lama waktu yang dibutuhkan
     server untuk mengembalikan respon. Waktu tunggu normal respon AI
-    pada aplikasi ini adalah sekitar 30 detik. Bila lebih lama dari
-    itu maka ada kemungkinan masalah jaringan atau lainnya.
+    pada aplikasi ini adalah sekitar 30 detik hingga 1 menit. Bila
+    lebih lama dari itu maka ada kemungkinan masalah jaringan atau
+    kendala lainnya. Silahkan refresh halaman aplikasi untuk
+    mengembalikan ke kondisi semula.
   `},
   {category: 'AI Chat', title: 'AI Engine', content: `
     Aplikasi ini menggunakan Public API key dari Google Gemini
@@ -136,14 +138,3 @@ comps.guide = x => [
     ]})
   )
 ]
-
-/*
-makeModal = name => m('.modal',
-  {class: state[name] && 'is-active'},
-  m('.modal-background'),
-  m('.modal-content', state[name]),
-  m('.modal-close.is-large', {onclick: () =>
-    [state[name] = null, m.redraw()]
-  })
-), // BUG: yg di dalam modal tidak mempan m.redraw()
-*/

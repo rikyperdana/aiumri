@@ -36,9 +36,10 @@ modulBackupRestore =  m('.box', [
   m('h4', 'Backup & Restore'),
   m('p', 'Karena App ini tidak menggunakan DB di sisi server, maka pilihannya adalah backup dan restore apa yang ada di dalam browser.'),
   m('.ul', [
-    m('li', 'Klik Backup dan dapatkan file .json'),
-    m('li', 'Klik Restore dan berikan file .json')
-  ]), m('br'),
+    'Klik Backup dan dapatkan file .json',
+    'Klik Restore dan berikan file .json',
+    'Klik Destroy untuk lupakan semua memori.'
+  ].map(list => m('li', list))), m('br'),
   m('.buttons', [
     m('.button.is-info', {onclick: x => saveAs(
       new Blob(
@@ -51,9 +52,15 @@ modulBackupRestore =  m('.box', [
       ),
       `Backup AI UMRI ${(new Date()).toLocaleDateString('en-gb')}.json`
     )}, 'Backup'),
-    m('.button.is-danger', {
+    m('.button.is-warning', {
       onclick: x => alert('Restore is coming soon..')
-    }, 'Restore')
+    }, 'Restore'),
+    m('.button.is-danger', {
+      onclick: x =>
+        confirm('Yakin lupakan semua memori?')
+        && localStorage.removeItem('memories')
+        && alert('Semua memori sudah terhapus')
+    }, 'Destroy')
   ])
 ]),
 
