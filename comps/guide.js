@@ -92,7 +92,7 @@ const guides = [
   {category: 'Aplikasi', title: 'Software Update', content: `
     Aplikasi ini berbasis web (duh!). Jadi update akan berlangsung
     secara otomatis tanpa perlu perintah langsung dari user. Versi
-    terkini adalah 1.0.1 yang berarti aplikasi ini sudah siap untuk
+    terkini adalah 1.0.2 yang berarti aplikasi ini sudah siap untuk
     digunakan dengan fitur yang ada, diupayakan bebas dari bugs,
     dan akan senantiasa dipantau kualitasnya oleh developer.
   `},

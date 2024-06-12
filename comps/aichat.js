@@ -34,7 +34,7 @@ comps.aichat = x => [
     }, ({threads, query, key}) => [
       Object.assign(state, {isLoading: true}),
       localStorage.setItem('threads', JSON.stringify([
-        ...threads, query, {message: '...berfikir', mrole: 'model'}
+        ...threads, query, {message: '...berfikir', role: 'model'}
       ])),
       (new state.aiModule.GoogleGenerativeAI(randomGemini()))
       .getGenerativeModel({model: 'gemini-1.5-flash'})
