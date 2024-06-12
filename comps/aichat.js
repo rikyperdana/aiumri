@@ -2,19 +2,7 @@ import('https://esm.run/@google/generative-ai').then
 (module => Object.assign(state, {aiModule: module}))
 
 const
-randomId = x => Math.random().toString(36).slice(2),
-
-askGemini = (history, message, cb) =>
-  (new state.aiModule.GoogleGenerativeAI(randomGemini()))
-  .getGenerativeModel({model: 'gemini-1.5-flash'})
-  .startChat({
-    generateConfig: {maxOutputTokens: 100},
-    history: history.map(thread => ({
-      parts: [{text: thread.message}],
-      role: thread.role
-    }))
-  }).sendMessage(message)
-  .then(result => cb(result.response.text()))
+randomId = x => Math.random().toString(36).slice(2)
 
 comps.aichat = x => [
   m('h3', 'Mari berbincang'),
@@ -46,21 +34,39 @@ comps.aichat = x => [
     }, ({threads, query, key}) => [
       Object.assign(state, {isLoading: true}),
       localStorage.setItem('threads', JSON.stringify([
-        ...threads, query
+        ...threads, query, {message: '...berfikir', mrole: 'model'}
       ])),
-      askGemini(threads, query.message, answer => [
-        delete state.isLoading,
-        localStorage.setItem(
-          'threads', JSON.stringify([
-            ...JSON.parse(localStorage.threads || '[]'),
-            {
-              message: answer, role: 'model',
-              responseTime: +(new Date())
-            }
+      (new state.aiModule.GoogleGenerativeAI(randomGemini()))
+      .getGenerativeModel({model: 'gemini-1.5-flash'})
+      .startChat({
+        generateConfig: {maxOutputTokens: 100},
+        history: threads.map(thread => ({
+          parts: [{text: thread.message}],
+          role: thread.role
+        }))
+      })
+      .sendMessageStream(query.message)
+      .then(({stream}) => {
+        let messagePool = ''
+        const loopNext = setInterval(x => (
+          stream.next().then(({done, value}) => [
+            done ? [
+              clearInterval(loopNext),
+              delete state.isLoading
+            ] : messagePool += value.text(),
+            localStorage.setItem('threads', JSON.stringify([
+              ..._.initial(JSON.parse(
+                localStorage.threads || '[]'
+              )),
+              {
+                message: messagePool, role: 'model',
+                responseTime: +(new Date())
+              }
+            ])),
+            m.redraw()
           ])
-        ),
-        m.redraw()
-      ])
+        ))
+      })
     ]),
     submit: {value: 'Kirim'},
     buttons: localStorage.threads && [
