@@ -127,7 +127,7 @@ autoForm = opts => ({view: () => {
       m('span', schema.label || _.startCase(
        name.split('.').map(i => +i + 1 ? +i + 1 : i).join('.')
       )),
-      m('span', m('b.has-text-danger', !schema.optional && ' *'))
+      // m('span', m('b.has-text-danger', !schema.optional && ' *'))
     )
   },
 
@@ -213,7 +213,7 @@ autoForm = opts => ({view: () => {
     ),
 
     textarea: () => m('.field',
-      attr.label(name, schema),
+      // attr.label(name, schema),
       m('.control',
         {class: _.get(schema, 'autoform.loading') ? 'is-loading' : ''},
         m('textarea.textarea', {
