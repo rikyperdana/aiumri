@@ -17,5 +17,6 @@ randomGemini = x => 'AIzaSy' + _.sample([
   'CMoGsXqVKSqH238t467wWDXX9dcCKaGuw',
   'DMMY2UNQgsuaBr40RuIhJC90BofT1895A',
   'CIA-T4MXvjFTHHct8tr1WSAp_Nb67X7Ds',
-  'DsfU8jR854LxOkNnvAYlmOGFC1BMaDxko'
+  'DsfU8jR854LxOkNnvAYlmOGFC1BMaDxko',
+  'CfRKZ52ECnoHwNuZWGoGXJBcOf3KCX9mg'
 ])

@@ -10,15 +10,10 @@ comps.aichat = x => [
   // Threads of interactions
   JSON.parse(localStorage.threads || '[]')
   .map(thread => m(
-    'article.message',
-    {class: [
-      thread.role === 'model' && 'is-primary',
-      localStorage.fontSize,
-    ].join(' ')},
-    m('.message-body', m(
-      'p.has-text-left',
-      m.trust(markdown.toHTML(thread.message))
-    ))
+    `article.message.${localStorage.fontSize}`,
+    m('.message-body', m('p', m.trust(
+      marked.parse(thread.message)
+    )))
   )),
 
   // Prompt Input
