@@ -5,12 +5,13 @@ comps.memories = x => [
   m(autoTable({
     id: 'catatan',
     heads: {
-      aksi: 'Aksi',
+      lanjut: 'Lanjut',
       tentang: 'Judul',
       mulai: 'Mulai',
       terbaru: 'Terbaru',
       trade: 'Chat',
       words: 'Kata',
+      hapus: 'Hapus'
     },
     search: true,
     onclick: console.log,
@@ -31,35 +32,33 @@ comps.memories = x => [
         words: sum(content.threads.map(
           thread => thread.message.split(' ').length
         )),
-        aksi: m('.buttons', [
-          m('.button.is-small.is-rounded.is-info', {
-            onclick: x => [
+        lanjut: m('.button.is-small.is-rounded.is-primary', {
+          onclick: x => [
+            localStorage.setItem(
+              'threads',
+              JSON.stringify(content.threads)
+            ),
+            localStorage.setItem(
+              'currentThreads',
+              JSON.stringify({...content, id})
+            ),
+            Object.assign(mgState, {
+              comp: comps.aichat
+            }),
+            m.redraw()
+          ]
+        }, m('span.icon', m('i.fas.fa-arrow-right'))),
+        hapus: m('.button.is-small.is-rounded.is-danger', {
+          onclick: x => confirm('Yakin hapus percakapan ini?') && (
+            withAs(JSON.parse(localStorage.memories), mems => [
+              delete mems[id],
               localStorage.setItem(
-                'threads',
-                JSON.stringify(content.threads)
+                'memories', JSON.stringify(mems)
               ),
-              localStorage.setItem(
-                'currentThreads',
-                JSON.stringify({...content, id})
-              ),
-              Object.assign(mgState, {
-                comp: comps.aichat
-              }),
               m.redraw()
-            ]
-          }, 'Lanjut'),
-          m('.button.is-small.is-rounded.is-danger', {
-            onclick: x => confirm('Yakin hapus percakapan ini?') && (
-              withAs(JSON.parse(localStorage.memories), mems => [
-                delete mems[id],
-                localStorage.setItem(
-                  'memories', JSON.stringify(mems)
-                ),
-                m.redraw()
-              ])
-            )
-          }, 'Hapus')
-        ])
+            ])
+          )
+        }, m('span.icon', m('i.fas.fa-times')))
       }
     }))
   }))

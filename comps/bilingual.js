@@ -1,4 +1,5 @@
 comps.bilingual = x => [
+  m('p', 'Sedang dalam pengembangan...'),
   m('h3', 'Percakapan Dua Bahasa'),
   m(autoForm({
     id: 'bilingual',
