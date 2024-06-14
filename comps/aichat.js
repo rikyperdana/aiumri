@@ -10,7 +10,11 @@ comps.aichat = x => [
   // Threads of interactions
   JSON.parse(localStorage.threads || '[]')
   .map(thread => m(
-    `article.message.${localStorage.fontSize}`,
+    'article.message',
+    {class: [
+      localStorage.fontSize,
+      thread.role === 'user' && 'is-primary'
+    ].join(' ')},
     m('.message-body', m('p', m.trust(
       marked.parse(thread.message)
     )))

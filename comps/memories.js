@@ -5,12 +5,12 @@ comps.memories = x => [
   m(autoTable({
     id: 'catatan',
     heads: {
+      aksi: 'Aksi',
+      tentang: 'Judul',
       mulai: 'Mulai',
       terbaru: 'Terbaru',
-      tentang: 'Judul',
-      trade: 'Interaksi',
-      words: 'Panjang',
-      aksi: 'Aksi'
+      trade: 'Chat',
+      words: 'Kata',
     },
     search: true,
     onclick: console.log,
@@ -27,10 +27,10 @@ comps.memories = x => [
           last => ors([last.responseTime, last.requestTime])
         )).toLocaleDateString('en-gb'),
         tentang: content.title,
-        trade: content.threads.length + ' kali',
+        trade: content.threads.length,
         words: sum(content.threads.map(
           thread => thread.message.split(' ').length
-        )) + ' kata',
+        )),
         aksi: m('.buttons', [
           m('.button.is-small.is-rounded.is-info', {
             onclick: x => [
