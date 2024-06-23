@@ -104,6 +104,17 @@ const guides = [
     silahkan hubungi pengembang untuk mendapatkan lisensi hak guna.
     Source code aplikasi ini dapat dilihat di alamat repository
     https://github.com/rikyperdana/aiumri
+  `},
+  {category: 'Aplikasi', title: 'Disclaimer', content: `
+    Aplikasi AI Chat ini menggunakan otak Large Language Model dari
+    Google Gemini 1.5 Flash yang sudah di sensor sedemikian rupa
+    untuk meminimalisir dan mencegah potensi jawaban yang mengandung
+    unsur agama, politik, ras, dan hal etik lainnya. Dan tidak
+    tertutup kemungkinan bahwa jawaban yg dikeluarkan dapat
+    mengandung konten yang tidak tepat, bias, atau bentuk negatif
+    lainnya. Aplikasi ini disajikan apa adanya. Segala bentuk
+    tanggung jawab penggunaan aplikasi kembali pada masing-masing
+    user. Gunakan secara bijaksana.
   `}
 ]
 
