@@ -41,9 +41,9 @@ comps.bilingual = x => [
       .getGenerativeModel({model: 'gemini-1.5-flash'})
       .generateContent(`
         Please translate the following text to ${doc.target}
-        with no entailing details. Please provide the Latin
-        spelling if the result is in non-Latin
-        "${doc.message}"
+        with no entailing details. "${doc.message}"
+        Please provide the Latin spelling if the result is
+        in non-Latin
       `)
       .then(result => [
         localStorage.setItem(
