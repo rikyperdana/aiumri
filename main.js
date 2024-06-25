@@ -5,6 +5,7 @@ m.mount(document.body, mitGen({
     aichat: {full: 'AI Chat', icon: 'comments', comp: comps.aichat},
     memories: {full: 'Memori', icon: 'brain', comp: comps.memories},
     bilingual: {full: 'Bilingual', icon: 'user-friends', comp: comps.bilingual},
+    knowledge: {full: 'Pohon Ilmu', icon: 'tree', comp: comps.knowledge},
     guide: {full: 'Panduan', icon: 'chalkboard-teacher', comp: comps.guide},
     settings: {full: 'Pengaturan', icon: 'gear', comp: comps.settings},
   }
