@@ -1,4 +1,5 @@
 comps.knowledge = x => [
+  m('p', 'Sedang dalam pengembangan...'),
   m('h3', 'Pohon Ilmu'),
   m(autoForm({
     id: 'knowledge',
