@@ -7,10 +7,10 @@ comps.memories = x => [
     heads: {
       lanjut: 'Lanjut',
       tentang: 'Judul',
-      mulai: 'Mulai',
-      terbaru: 'Terbaru',
       trade: 'Chat',
       words: 'Kata',
+      mulai: 'Mulai',
+      terbaru: 'Terbaru',
       hapus: 'Hapus'
     },
     search: true,

@@ -52,6 +52,25 @@ const guides = [
     yaitu ChatGPT 3.5 Turbo dari OpenAI.
   `},
 
+  // Kategori Bilingual
+  {category: 'Bilingual', title: 'Cara pakai', content: `
+    Menu Bilingual ini dapat kamu gunakan untuk melakukan percakapan
+    multi bahasa dengan lawan bicara yang saling tidak memahami
+    bahasa satu sama lain. Hingga saat ini sudah tersedia 13 bahasa
+    berbeda yang didukung oleh AI dalam aplikasi ini. Cukup pilih
+    bahasa yang digunakan lawan bicara, maka teks apapun yang kita
+    inputkan akan diterjemahkan ke bahasa yang ditunjuk. Tunjukkan
+    atau bacakan hasil terjemahan kepada lawan bicara, dan biarkan
+    lawan bicara tersebut memberikan respon melalui input teks
+    dengan pilihan bahasa Indonesia atau yang kamu pahami. Riwayat
+    percakapan akan terlihat dan dapat disimpan ke dalam memori
+    percakapan Bilingual bila diinginkan. Teknologi penerjemah yang
+    digunakan tidak sama dengan Google Translate, AI dapat mengenali
+    maksud pesan yang disampaikan dan menghasilkan terjemahan yang
+    paling mendekati maksud yang ingin disampaikan dalam bahasa
+    tujuan.
+  `},
+
   // Kategori Setting
   {category: 'Pengaturan', title: 'Backup/Restore', content: `
     Aplikasi ini tidak menggunakan DB di sisi server, sehingga

@@ -22,8 +22,8 @@ comps.bilingual = x => [
         type: String, label: 'Bahasa tujuan / Target Language',
         autoform: {type: 'select', options: x => [
           'Indonesia',
-          'English', 'Japan', 'Chinese', 'Arabic',
-          'Korean', 'Thailand', 'Malay'
+          'English', 'Japanese', 'Chinese', 'Arabic',
+          'Korean', 'Thailand', 'Malay', 'Vietnamese'
         ].map(lang => ({value: lang, label: lang}))}
       },
       message: {
