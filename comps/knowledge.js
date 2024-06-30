@@ -1,6 +1,18 @@
 comps.knowledge = x => [
-  m('p', 'Sedang dalam pengembangan...'),
   m('h3', 'Pohon Ilmu'),
+
+  withAs(
+    Object.entries(JSON.parse(
+      localStorage.currentTree || '{}'
+    ))[0],
+    ([title, tree]) => m('article.message', [
+      m('.message-header', m('p', title)),
+      m('#ground', {oncreate: vnode =>
+        vnode.dom.appendChild(renderjson(tree))
+      })
+    ])
+  ),
+
   m(autoForm({
     id: 'knowledge',
     schema: {
@@ -21,7 +33,9 @@ comps.knowledge = x => [
       }
     },
     layout: {top: [['topic', 'language', 'level']]},
+    submit: {value: 'Buatkan'},
     action: doc => [
+      Object.assign(state, {isLoading: true}),
       (new state.aiModule.GoogleGenerativeAI(randomGemini()))
       .getGenerativeModel({model: 'gemini-1.5-flash'})
       .generateContent(`
@@ -31,16 +45,16 @@ comps.knowledge = x => [
         Please provide only the JSON with no entailing details.
       `)
       .then(result => [
+        delete state.isLoading,
         localStorage.setItem(
           'currentTree',
-          JSON.parse(
-            result.response.text()
-            .replaceAll('\n', '')
-            .replaceAll('  ', '')
-            .split('```')[1]
-            .substr(4)
-          )
-        )
+          result.response.text()
+          .replaceAll('\n', '')
+          .replaceAll('  ', '')
+          .split('```')[1]
+          .substr(4)
+        ),
+        m.redraw()
       ])
     ]
   }))
