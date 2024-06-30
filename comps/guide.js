@@ -71,6 +71,23 @@ const guides = [
     tujuan.
   `},
 
+  // Kategori Pohon Ilmu
+  {category: 'Pohon Ilmu', title: 'Cara pakai', content: `
+    Kamu dapat menggunakan menu ini untuk membangun sebuah pohon
+    pengetahuan akan suatu topik khusus yang kamu sebutkan. Input
+    kata kunci pengetahuan yang diinginkan, maka AI akan membuat
+    sebuah pohon JSON yang berisi percabangan pengetahuan yang
+    sesuai dengan kata kunci tersebut. Ukuran pohon tersebut bisa
+    besar ataupun kecil tergantung faktor seperti seberapa spesifik
+    topik yang diminta dan seberapa paham AI tentang topik tersebut.
+    Waktu loading yang dibutuhkan AI dapat berkisar dari 1 hingga 3
+    menit. Jika lebih lama dari itu mungkin ada kendala jaringan,
+    AI yang error, atau topik yang diminta bertentangan dengan
+    batasan topik yang AI izinkan. Membuat pohon topik yang sama
+    pada waktu yang berbeda berpotensi mengeluarkan hasil yang
+    berbeda pula.
+  `},
+
   // Kategori Setting
   {category: 'Pengaturan', title: 'Backup/Restore', content: `
     Aplikasi ini tidak menggunakan DB di sisi server, sehingga
