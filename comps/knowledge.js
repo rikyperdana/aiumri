@@ -4,8 +4,8 @@ comps.knowledge = x => [
   withAs(
     Object.entries(JSON.parse(
       localStorage.currentTree || '{}'
-    ))[0],
-    ([title, tree]) => m('article.message', [
+    ))?.[0] || [],
+    ([title, tree]) => title && m('article.message', [
       m('.message-header', m('p', title)),
       m('#ground', {oncreate: vnode =>
         vnode.dom.appendChild(renderjson(tree))
