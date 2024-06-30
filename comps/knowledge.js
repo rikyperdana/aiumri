@@ -2,11 +2,10 @@ comps.knowledge = x => [
   m('h3', 'Pohon Ilmu'),
 
   withAs(
-    Object.entries(JSON.parse(
-      localStorage.currentTree || '{}'
-    ))?.[0] || [],
-    ([title, tree]) => title && m('article.message', [
-      m('.message-header', m('p', title)),
+    JSON.parse(localStorage.currentTree || '{}'),
+    tree => Object.keys(tree).length > 0
+    && m('article.message', [
+      m('.message-header', m('p', localStorage.treeTitle)),
       m('#ground', {oncreate: vnode =>
         vnode.dom.appendChild(renderjson(tree))
       })
@@ -15,37 +14,31 @@ comps.knowledge = x => [
 
   m(autoForm({
     id: 'knowledge',
-    schema: {
-      topic: {
-        type: String, label: 'Topik',
-      },
-      language: {
-        type: String, label: 'Bahasa',
-        autoform: {type: 'select', options: x => [
-          'Indonesia', 'English'
-        ].map(i => ({value: i, label: i}))}
-      },
-      level: {
-        type: String, label: 'Level Pemahaman',
-        autoform: {type: 'select', options: x => [
-          'Beginner', 'Intermediate', 'Advanced', 'Expert'
-        ].map(i => ({value: i, label: i}))}
+    schema: {topic: {
+      type: String, autoform: {
+        help: 'Disarankan dalam English'
       }
+    }},
+    submit: {
+      value: 'Create',
+      class: state.isLoading ?
+        'is-loading is-info' : 'is-info'
     },
-    layout: {top: [['topic', 'language', 'level']]},
-    submit: {value: 'Buatkan'},
     action: doc => [
       Object.assign(state, {isLoading: true}),
       (new state.aiModule.GoogleGenerativeAI(randomGemini()))
       .getGenerativeModel({model: 'gemini-1.5-flash'})
       .generateContent(`
         Please create a deeply nested object in JSON format
-        that best represents the knowledge about ${doc.topic}
-        at the ${doc.level} level in ${doc.language} language.
-        Please provide only the JSON with no entailing details.
+        that best represents the knowledge about "${doc.topic}"
+        as deep as your brain allows to. Please provide only
+        the JSON with no entailing details.
       `)
       .then(result => [
         delete state.isLoading,
+        localStorage.setItem(
+          'treeTitle', doc.topic
+        ),
         localStorage.setItem(
           'currentTree',
           result.response.text()
@@ -56,6 +49,18 @@ comps.knowledge = x => [
         ),
         m.redraw()
       ])
+    ],
+    buttons: localStorage.currentTree && [
+      {label: 'Reset', opt: {
+        class: 'is-warning',
+        onclick: e => confirm('Yakin reset pohon ini?')
+        && [
+          e.preventDefault(),
+          localStorage.removeItem('treeTitle'),
+          localStorage.removeItem('currentTree'),
+          m.redraw(), scroll(0, 0)
+        ]
+      }},
     ]
   }))
 ]
