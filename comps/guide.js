@@ -83,7 +83,8 @@ const guides = [
     Waktu loading yang dibutuhkan AI dapat berkisar dari 1 hingga 3
     menit. Jika lebih lama dari itu mungkin ada kendala jaringan,
     AI yang error, atau topik yang diminta bertentangan dengan
-    batasan topik yang AI izinkan. Membuat pohon topik yang sama
+    batasan topik yang AI izinkan. Silahkan refresh browser untuk
+    kembalikan ke kondisi semula. Membuat pohon topik yang sama
     pada waktu yang berbeda berpotensi mengeluarkan hasil yang
     berbeda pula.
   `},

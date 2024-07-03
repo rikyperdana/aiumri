@@ -61,6 +61,18 @@ comps.knowledge = x => [
           m.redraw(), scroll(0, 0)
         ]
       }},
+      {label: 'Simpan', opt: {
+        class: 'is-success',
+        onclick: e => [
+          e.preventDefault(),
+          localStorage.setItem(
+            'yggdrassil', JSON.stringify(Object.assign(
+              JSON.parse(localStorage.yggdrassil || '{}'),
+              {[localStorage.treeTitle]: localStorage.currentTree}
+            ))
+          )
+        ]
+      }}
     ]
   }))
 ]

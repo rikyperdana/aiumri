@@ -2,7 +2,7 @@ m.mount(document.body, mitGen({
   theme: localStorage.appTheme || 'default',
   brand: {name: 'home', full: 'AI UMRI'},
   start: {
-    aichat: {full: 'AI Chat', icon: 'comments', comp: comps.aichat},
+    aichat: {full: 'Tanya AI', icon: 'comments', comp: comps.aichat},
     memories: {full: 'Memori', icon: 'brain', comp: comps.memories},
     bilingual: {full: 'Bilingual', icon: 'user-friends', comp: comps.bilingual},
     knowledge: {full: 'Pohon Ilmu', icon: 'tree', comp: comps.knowledge},
