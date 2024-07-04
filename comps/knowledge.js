@@ -41,11 +41,13 @@ comps.knowledge = x => [
         ),
         localStorage.setItem(
           'currentTree',
-          result.response.text()
-          .replaceAll('\n', '')
-          .replaceAll('  ', '')
-          .split('```')[1]
-          .substr(4)
+          JSON.stringify(JSON.parse(
+            result.response.text()
+            .replaceAll('\n', '')
+            .replaceAll('  ', '')
+            .split('```')[1]
+            .substr(4) || '{}'
+          )),
         ),
         m.redraw()
       ])
@@ -70,7 +72,9 @@ comps.knowledge = x => [
               JSON.parse(localStorage.forest || '{}'),
               {[localStorage.treeTitle]: localStorage.currentTree}
             ))
-          )
+          ),
+          alert('Pohon berhasil disimpan'),
+          m.redraw(), scroll(0, 0)
         ]
       }}
     ]
