@@ -66,13 +66,51 @@ comps.knowledge = x => [
         onclick: e => [
           e.preventDefault(),
           localStorage.setItem(
-            'yggdrassil', JSON.stringify(Object.assign(
-              JSON.parse(localStorage.yggdrassil || '{}'),
+            'forest', JSON.stringify(Object.assign(
+              JSON.parse(localStorage.forest || '{}'),
               {[localStorage.treeTitle]: localStorage.currentTree}
             ))
           )
         ]
       }}
     ]
+  })),
+
+  m('h3', 'Kebun Ilmu'),
+  m(autoTable({
+    id: 'forest',
+    heads: {
+      open: 'Lanjut',
+      title: 'Judul',
+      remove: 'Hapus'
+    },
+    rows: Object.entries(JSON.parse(
+      localStorage.forest || '{}'
+    )).map(([title, content]) => ({
+      data: {title, content},
+      row: {
+        title,
+        open: m(
+          '.button.is-small.is-rounded.is-primary',
+          {onclick: x => [
+            localStorage.setItem('treeTitle', title),
+            localStorage.setItem('currentTree', content),
+            m.redraw()
+          ]},
+          m('span.icon', m('i.fas.fa-arrow-right'))
+        ),
+        remove: m(
+          '.button.is-small.is-rounded.is-danger',
+          {onclick: x => confirm('Yakin hapus pohon ini?') && [
+            localStorage.setItem('forest', JSON.stringify(
+              _.omit(JSON.parse(localStorage.forest || '{}'), title)
+            )),
+            m.redraw()
+          ]},
+          m('span.icon', m('i.fas.fa-times'))
+        )
+      }
+    })),
+    onclick: x => null
   }))
 ]
