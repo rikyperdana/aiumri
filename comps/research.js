@@ -26,11 +26,14 @@ comps.research = x => [
       'Artikel': {
         group: {
           type: String, label: 'Grup Sitasi',
-          autoform: {help: 'Pengelompokan sitasi ini'}
+          autoform: {help: 'Gunakan sebuah keyword tertentu'}
         },
-        title: {type: String, label: 'Judul Artikel'},
+        title: {
+          type: String, label: 'Judul Artikel',
+          autoform: {type: 'textarea'}
+        },
         authors: {type: Array, label: 'Para Penulis'},
-        'authors.$': {type: Object, label: 'Penulis'},
+        'authors.$': {type: Object},
         'authors.$.firstName': {type: String, label: 'Nama Pangkal'},
         'authors.$.lastName': {type: String, label: 'Nama Akhir'},
         journal: {type: Object},
@@ -45,6 +48,10 @@ comps.research = x => [
           type: String,
           autoform: {type: 'textarea'},
           label: 'Konten penting dalam artikel',
+        },
+        fileLink: {
+          type: String, optional: true,
+          label: 'Link ke file'
         }
       },
       'Buku': {
@@ -57,8 +64,9 @@ comps.research = x => [
     layout: ({
       'Artikel': {
         top: [
-          ['group', 'title'],
-          ['journal', 'authors']
+          ['group'], ['title'],
+          ['journal', 'authors'],
+          ['content'], ['fileLink']
         ],
         journal: [
           ['name'],
@@ -79,6 +87,7 @@ comps.research = x => [
           }}
         ))
       ),
+      delete state.citeType,
       m.redraw(), scroll(0, 0)
     ],
     buttons: [
@@ -98,6 +107,7 @@ comps.research = x => [
     id: 'citations',
     heads: {
       open: 'Lihat',
+      group: 'Group',
       title: 'Judul',
       authors: 'Penulis',
       year: 'Tahun',
@@ -110,6 +120,7 @@ comps.research = x => [
       data: {[id]: rec},
       row: {
         title: rec.title,
+        group: rec.group,
         year: rec.journal.year,
         journal: rec.journal.name,
         authors: rec.authors
@@ -118,7 +129,7 @@ comps.research = x => [
           '.button.is-small.is-rounded.is-primary',
           {onclick: x => [
             Object.assign(state, {
-              citeType: rec.type,
+              citeType: rec.type || state.citeType,
               openCiteContent: rec,
               openCiteId: id
             }),
