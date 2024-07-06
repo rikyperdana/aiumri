@@ -1,7 +1,9 @@
 comps.research = x => [
   m('p', 'Sedang dalam pengembangan'),
   // Form input: buku, artikel, web
+
   m('h3', 'Tambah Sitasi'),
+
   !state.citeType ? m(autoForm({
     id: 'citeType',
     schema: {tipe: {
@@ -16,10 +18,15 @@ comps.research = x => [
       Object.assign(state, {citeType: doc.tipe})
     ]
   })) :
+
   m(autoForm({
     id: 'newCite',
     schema: ({
       'Artikel': {
+        group: {
+          type: String, label: 'Grup Sitasi',
+          autoform: {help: 'Pengelompokan sitasi ini'}
+        },
         title: {type: String, label: 'Judul Artikel'},
         authors: {type: Array, label: 'Para Penulis'},
         'authors.$': {type: Object, label: 'Penulis'},
@@ -46,6 +53,20 @@ comps.research = x => [
         title: {type: String}
       }
     })[state.citeType],
+    layout: ({
+      'Artikel': {
+        top: [
+          ['group', 'title'],
+          ['journal', 'authors']
+        ],
+        journal: [
+          ['name'],
+          ['year', 'volume', 'issue'],
+          ['page', 'city', 'doi']
+        ],
+        'authors.$': [['firstName', 'lastName']]
+      }
+    })[state.citeType],
     submit: {value: 'Simpan'},
     buttons: [
       {label: 'Batal', opt: {
@@ -57,6 +78,7 @@ comps.research = x => [
       }}
     ]
   }))
+
   // Bank Riset: berkategori
   // Diskusikan dengan AI
 ]

@@ -6,7 +6,7 @@ m.mount(document.body, mitGen({
     memories: {full: 'Memori', icon: 'brain', comp: comps.memories},
     bilingual: {full: 'Bilingual', icon: 'user-friends', comp: comps.bilingual},
     knowledge: {full: 'Pohon Ilmu', icon: 'tree', comp: comps.knowledge},
-    // research: {full: 'Teman Riset', icon: 'book-reader', comp: comps.research},
+    research: {full: 'Teman Riset', icon: 'book-reader', comp: comps.research},
     guide: {full: 'Panduan', icon: 'chalkboard-teacher', comp: comps.guide},
     settings: {full: 'Pengaturan', icon: 'gear', comp: comps.settings},
   }
