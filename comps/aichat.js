@@ -24,7 +24,7 @@ comps.aichat = x => [
   state.aiModule && m(autoForm({
     id: 'aichat',
     schema: {message: {
-      type: String, label: 'Pertanyaan',
+      type: String, label: ' ',
       autoform: {
         type: 'textarea', loading: state.isLoading,
         placeholder: 'Pertanyaan'

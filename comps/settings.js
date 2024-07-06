@@ -64,23 +64,19 @@ modulBackupRestore =  m('.box', [
   ])
 ]),
 
-modulProfilku = m('.box', [
-  m('h4', 'Profilku'),
+modulRAG = m('.box', [
+  m('h4', 'Perkenalan User'),
   m('p', 'Perkenalkan dirimu kepada AI untuk jawaban yang lebih personal. Abaikan form ini bila ingin tetap anonim dihadapan AI.'),
   m(autoForm({
     id: 'myProfile',
     doc: JSON.parse(localStorage.myProfile || '{}'),
     schema: {
-      name: {
-        type: String, label: 'Nama Lengkap',
-        optional: true
-      },
       nick: {
-        type: String, label: 'Nama Panggilan',
+        type: String, label: 'Panggilan',
         optional: true
       },
       bio: {
-        type: String, label: 'Biodata', optional: true,
+        type: String, label: 'Tentang kamu', optional: true,
         autoform: {
           type: 'textarea',
           help: 'App ini tidak punya DB sisi server. Semua info diatas hanya ada dalam browser kamu, tepatnya di localStorage.'
@@ -125,5 +121,5 @@ comps.settings = x => [
     m('.column', modulUkuranFont)
   ]),
   modulBackupRestore,
-  modulProfilku
+  modulRAG
 ]

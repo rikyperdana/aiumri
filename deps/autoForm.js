@@ -213,7 +213,7 @@ autoForm = opts => ({view: () => {
     ),
 
     textarea: () => m('.field',
-      // attr.label(name, schema),
+      attr.label(name, schema),
       m('.control',
         {class: _.get(schema, 'autoform.loading') ? 'is-loading' : ''},
         m('textarea.textarea', {
