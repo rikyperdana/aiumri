@@ -21,6 +21,7 @@ comps.research = x => [
 
   m(autoForm({
     id: 'newCite',
+    doc: state.openCiteContent,
     schema: ({
       'Artikel': {
         group: {
@@ -68,6 +69,18 @@ comps.research = x => [
       }
     })[state.citeType],
     submit: {value: 'Simpan'},
+    action: doc => [
+      localStorage.setItem(
+        'citations',
+        JSON.stringify(Object.assign(
+          JSON.parse(localStorage.citations || '{}'),
+          {[state.openCiteId || randomId()]: {
+            ...doc, type: state.citeType
+          }}
+        ))
+      ),
+      m.redraw(), scroll(0, 0)
+    ],
     buttons: [
       {label: 'Batal', opt: {
         class: 'is-warning',
@@ -77,8 +90,55 @@ comps.research = x => [
         ]
       }}
     ]
-  }))
+  })),
 
   // Bank Riset: berkategori
+  m('h3', 'Bank Data Sitasi'),
+  m(autoTable({
+    id: 'citations',
+    heads: {
+      open: 'Lihat',
+      title: 'Judul',
+      authors: 'Penulis',
+      year: 'Tahun',
+      journal: 'Jurnal',
+      remove: 'Hapus'
+    },
+    rows: Object.entries(JSON.parse(
+      localStorage.citations || '{}'
+    )).map(([id, rec]) => ({
+      data: {[id]: rec},
+      row: {
+        title: rec.title,
+        year: rec.journal.year,
+        journal: rec.journal.name,
+        authors: rec.authors
+          .map(i => i.lastName).join(', '),
+        open: m(
+          '.button.is-small.is-rounded.is-primary',
+          {onclick: x => [
+            Object.assign(state, {
+              citeType: rec.type,
+              openCiteContent: rec,
+              openCiteId: id
+            }),
+            m.redraw(), scroll(0, 0)
+          ]},
+          m('span.icon', m('i.fas.fa-arrow-right'))
+        ),
+        remove: m(
+          '.button.is-small.is-rounded.is-danger',
+          {onclick: x => confirm('Yakin hapus ini?') && [
+            localStorage.setItem('citations', JSON.stringify(
+              _.omit(JSON.parse(localStorage.citations || '{}'), id)
+            ))
+          ]},
+          m('span.icon', m('i.fas.fa-times'))
+        )
+      }
+    })),
+    onclick: x => null
+  }))
+
   // Diskusikan dengan AI
 ]
