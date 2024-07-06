@@ -83,7 +83,10 @@ comps.research = x => [
         JSON.stringify(Object.assign(
           JSON.parse(localStorage.citations || '{}'),
           {[state.openCiteId || randomId()]: {
-            ...doc, type: state.citeType
+          ...doc, type: ors([
+              state.citeType,
+              state.openCiteContent.type
+            ])
           }}
         ))
       ),
