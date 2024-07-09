@@ -47,7 +47,7 @@ comps.research = x => [
         content: {
           type: String,
           autoform: {type: 'textarea'},
-          label: 'Konten penting dalam artikel',
+          label: 'Konten penting dalam artikel ini',
         },
         fileLink: {
           type: String, optional: true,
@@ -55,7 +55,27 @@ comps.research = x => [
         }
       },
       'Buku': {
-        title: {type: String}
+        title: {
+          type: String, label: 'Judul buku',
+          autoform: {type: 'textarea', rows: 2}
+        },
+        authors: {type: Array, label: 'Para penulis'},
+        'authors.$': {type: Object, label: 'Penulis'},
+        'authors.$.firstName': {type: String, label: 'Nama pangkal'},
+        'authors.$.lastName': {type: String, label: 'Nama akhir'},
+        year: {type: Number, label: 'Tahun terbit'},
+        publisher: {type: String, label: 'Penerbit'},
+        city: {type: String, label: 'Kota terbit'},
+        synopsis: {
+          type: String, label: 'Sinopsis / Ringkasan',
+          autoform: {type: 'textarea'}
+        },
+        content: {
+          type: String, label: 'Konten penting dalam buku ini',
+          autoform: {type: 'textarea'}
+        },
+        isbn: {type: Number, label: 'ISBN'},
+        fileLink: {type: String, label: 'Link ke file buku'}
       },
       'Web': {
         title: {type: String}
@@ -72,6 +92,15 @@ comps.research = x => [
           ['name'],
           ['year', 'volume', 'issue'],
           ['page', 'city', 'doi']
+        ],
+        'authors.$': [['firstName', 'lastName']]
+      },
+      'Buku': {
+        top: [
+          ['title'], ['authors'],
+          ['year', 'publisher', 'city'],
+          ['synopsis', 'content'],
+          ['isbn', 'fileLink']
         ],
         'authors.$': [['firstName', 'lastName']]
       }
