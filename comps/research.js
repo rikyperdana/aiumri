@@ -23,10 +23,14 @@ comps.research = x => [
     id: 'newCite',
     doc: state.openCiteContent,
     schema: ({
+
       'Artikel': {
         group: {
           type: String, label: 'Grup Sitasi',
-          autoform: {help: 'Gunakan sebuah keyword tertentu'}
+          autoform: {help: `
+            Gunakan sebuah / beberapa keyword tertentu,
+            pisahkan dengan tanda koma.
+          `}
         },
         title: {
           type: String, label: 'Judul Artikel',
@@ -54,7 +58,15 @@ comps.research = x => [
           label: 'Link ke file'
         }
       },
+
       'Buku': {
+        group: {
+          type: String, label: 'Grup Sitasi',
+          autoform: {help: `
+            Gunakan sebuah / beberapa keyword tertentu,
+            pisahkan dengan tanda koma.
+          `}
+        },
         title: {
           type: String, label: 'Judul buku',
           autoform: {type: 'textarea', rows: 2}
@@ -77,11 +89,27 @@ comps.research = x => [
         isbn: {type: Number, label: 'ISBN'},
         fileLink: {type: String, label: 'Link ke file buku'}
       },
+
       'Web': {
-        title: {type: String}
+        group: {
+          type: String, label: 'Grup Sitasi',
+          autoform: {help: `
+            Gunakan sebuah / beberapa keyword tertentu,
+            pisahkan dengan tanda koma.
+          `}
+        },
+        title: {type: String, label: 'Judul halaman'},
+        url: {type: String, label: 'Link URL'},
+        date: {type: Date, label: 'Tanggal terbit'},
+        authors: {type: Array, label: 'Para penulis'},
+        'authors.$': {type: Object, label: 'Penulis'},
+        'authors.$.firstName': {type: String, label: 'Nama pangkal'},
+        'authors.$.lastName': {type: String, label: 'Nama akhir'},
       }
     })[state.citeType],
+
     layout: ({
+
       'Artikel': {
         top: [
           ['group'], ['title'],
@@ -95,17 +123,28 @@ comps.research = x => [
         ],
         'authors.$': [['firstName', 'lastName']]
       },
+
       'Buku': {
         top: [
-          ['title'], ['authors'],
+          ['group'], ['title'], ['authors'],
           ['year', 'publisher', 'city'],
           ['synopsis', 'content'],
           ['isbn', 'fileLink']
         ],
         'authors.$': [['firstName', 'lastName']]
+      },
+
+      'Web': {
+        top: [
+          ['group'], ['title'],
+          ['date', 'url'], ['authors']
+        ],
+        'authors.$': [['firstName', 'lastName']]
       }
     })[state.citeType],
+
     submit: {value: 'Simpan'},
+
     action: doc => [
       localStorage.setItem(
         'citations',
@@ -114,7 +153,7 @@ comps.research = x => [
           {[state.openCiteId || randomId()]: {
           ...doc, type: ors([
               state.citeType,
-              state.openCiteContent.type
+              state.openCiteContent?.type
             ])
           }}
         ))
@@ -122,10 +161,12 @@ comps.research = x => [
       delete state.citeType,
       m.redraw(), scroll(0, 0)
     ],
+
     buttons: [
       {label: 'Batal', opt: {
         class: 'is-warning',
-        onclick: x => [
+        onclick: e => [
+          e.preventDefault(),
           delete state.citeType,
           m.redraw()
         ]
@@ -139,10 +180,8 @@ comps.research = x => [
     id: 'citations',
     heads: {
       open: 'Lihat',
-      group: 'Group',
-      title: 'Judul',
-      authors: 'Penulis',
-      year: 'Tahun',
+      group: 'Group', title: 'Judul',
+      authors: 'Penulis', year: 'Tahun',
       journal: 'Jurnal',
       remove: 'Hapus'
     },
@@ -153,9 +192,13 @@ comps.research = x => [
       row: {
         title: rec.title,
         group: rec.group,
-        year: rec.journal.year,
-        journal: rec.journal.name,
-        authors: rec.authors
+        year: ors([
+          rec.year, // buku
+          rec.journal?.year, // artikel
+          rec.date && (new Date(rec.date)).getYear() + 1900 // web
+        ]),
+        journal: rec.journal?.name,
+        authors: (rec.authors || [])
           .map(i => i.lastName).join(', '),
         open: m(
           '.button.is-small.is-rounded.is-primary',
