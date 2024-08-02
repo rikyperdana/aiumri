@@ -99,8 +99,10 @@ comps.research = x => [
           `}
         },
         title: {type: String, label: 'Judul halaman'},
+        name: {type: String, label: 'Nama situs'},
         url: {type: String, label: 'Link URL'},
         date: {type: Date, label: 'Tanggal terbit'},
+        access: {type: Date, label: 'Tanggal diakses'},
         authors: {type: Array, label: 'Para penulis'},
         'authors.$': {type: Object, label: 'Penulis'},
         'authors.$.firstName': {type: String, label: 'Nama pangkal'},
@@ -136,8 +138,8 @@ comps.research = x => [
 
       'Web': {
         top: [
-          ['group'], ['title'],
-          ['date', 'url'], ['authors']
+          ['group'], ['title', 'name'], ['url'],
+          ['date', 'access'], ['authors']
         ],
         'authors.$': [['firstName', 'lastName']]
       }
@@ -223,7 +225,24 @@ comps.research = x => [
         )
       }
     })),
-    onclick: x => null
+    onclick: x => null,
+    buttons: [
+      {label: 'MLA', opt: rows => ({
+        onclick: x => console.log(
+          rows.map(item => withAs(
+            Object.values(item.data)[0],
+            source => ({
+              // lastName, firstName. "articleTitle". journalTitle, volNumber, issueNumber (year): pageNumber
+              'Artikel': `${source.authors[0].lastName}, ${source.authors[0].firstName}. "${source.title}". ${source.journal?.name}, ${source.journal?.volume}, ${source.journal?.issue} (${source.journal?.year}): ${source.journal?.page}`,
+              // lastName, firstName. bookTitle. place. publisher, year
+              'Buku': `${source.authors[0].lastName} ${source.authors[0].firstName}. ${source.title}. ${source.city}. ${source.publisher}, ${source.year}.`,
+              // lastName, firstName(ops). "pageTitle". websiteName, date(ops). linkURL, accessDate.
+              'Web': `${source.authors[0].lastName}, ${source.authors[0].firstName}. "${source.title}". ${source.name}, ${source.date}. ${source.url}, ${source.access}`
+            })[source.type]
+          ))
+        )
+      })}
+    ]
   }))
 
   // Diskusikan dengan AI
