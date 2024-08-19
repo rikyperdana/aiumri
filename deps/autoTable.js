@@ -136,12 +136,9 @@ autoTable = opts => ({view: () => m('.box',
   m('.field.is-grouped', [
 
     ...(opts.buttons || []).map(i => i && m('.control',
-      m('.button',
-        typeof(i.opt) === 'function' ? i.opt(
-          atModify(opts.rows, opts)
-        ) : i.opt,
-        i.label
-      )
+      m('.button', typeof(i.opt) === 'function' ? i.opt(
+        atModify(opts.rows, opts)
+      ) : i.opt, i.label)
     )),
 
     // export table contents to csv
