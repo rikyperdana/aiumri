@@ -258,21 +258,25 @@ comps.research = x => [
     buttons: [
       {label: 'MLA', opt: rows => ({
         class: 'is-primary',
-        onclick: x => _.assign(state, {referenceList:
-          rows.map(item => withAs(
-            Object.values(item.data)[0],
-            source => ({
-              // lastName, firstName. "articleTitle". journalTitle, volNumber, issueNumber (year): pageNumber
-              'Artikel': `${source.authors[0].lastName}, ${source.authors[0].firstName}. "${source.title}". ${source.journal?.name}, ${source.journal?.volume}, ${source.journal?.issue} (${source.journal?.year}): ${source.journal?.page}`,
-              // lastName, firstName. bookTitle. place. publisher, year
-              'Buku': `${source.authors[0].lastName}, ${source.authors[0].firstName}. ${source.title}. ${source.city}. ${source.publisher}, ${source.year}.`,
-              // lastName, firstName(ops). "pageTitle". websiteName, date(ops). linkURL, accessDate.
-              'Web': `${source.authors[0].lastName}, ${source.authors[0].firstName}. "${source.title}". ${source.name}, ${new Date(source.date).toLocaleDateString('en-gb')}. ${source.url}, ${new Date(source.access).toLocaleDateString()}`
-            })[source.type]
-          ))
-        }) && m.redraw()
+        onclick: x => _.assign(state, {referenceList:rows.map(
+          item => withAs(Object.values(item.data)[0], source => ({
+            'Buku': `${source.authors[0].lastName}, ${source.authors[0].firstName}. ${source.title}. ${source.city}. ${source.publisher}, ${source.year}.`,
+            'Artikel': `${source.authors[0].lastName}, ${source.authors[0].firstName}. "${source.title}". ${source.journal?.name}, ${source.journal?.volume}, ${source.journal?.issue} (${source.journal?.year}): ${source.journal?.page}`,
+            'Web': `${source.authors[0].lastName}, ${source.authors[0].firstName}. "${source.title}". ${source.name}, ${new Date(source.date).toLocaleDateString('en-gb')}. ${source.url}, ${new Date(source.access).toLocaleDateString()}`
+          })[source.type])
+        ).sort((a, b) => a.localeCompare(b))})
+        && m.redraw()
       })},
-      // TODO: APA version
+      {label: 'APA', opt: rows => ({
+        class: 'is-primary',
+        onclick: x => _.assign(state, {referenceList: rows.map(
+          item => withAs(Object.values(item.data)[0], source => ({
+            'Buku': `${source.authors[0].lastName}, ${source.authors[0].firstName.slice(0,1)}. (${source.year}). ${source.title}. ${source.city}: ${source.publisher}.`,
+            'Artikel': `${source.authors[0].lastName}, ${source.authors[0].firstName.slice(0,1)}. ${source.title}. ${source.journal?.name}, Vol. ${source.journal?.volume}, Issue ${source.journal?.issue}, ${source.journal?.page}.`,
+            'Web': `${source.authors[0].lastName}, ${source.authors[0].firstName.slice(0,1)}. (${new Date(source.date).toLocaleDateString()}). ${source.title}. ${source.url}`
+          })[source.type])
+        ).sort((a, b) => a.localeCompare(b))})
+      })}
       // TODO: HRV version
     ]
   }))
