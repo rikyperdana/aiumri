@@ -45,7 +45,7 @@ comps.research = x => [
         'journal.year': {type: Number, label: 'Tahun terbit'},
         'journal.volume': {type: Number, optional: true, label: 'Nomor volume'},
         'journal.issue': {type: Number, optional: true, label: 'Nomor Issue'},
-        'journal.page': {type: Number, optional: true, label: 'Nomor halaman'},
+        'journal.page': {type: String, optional: true, label: 'Nomor halaman'},
         'journal.city': {type: String, optional: true, label: 'Kota penerbit'},
         'journal.doi': {type: String, optional: true, label: 'Link DOI'},
         content: {
@@ -176,6 +176,29 @@ comps.research = x => [
     ]
   })),
 
+  // Generated Daftar Pustaka
+  ors([state.referenceList]) && m(autoForm({
+    id: 'references',
+    doc: {reference: state.referenceList.join('\n\n')},
+    schema: {
+      reference: {
+        type: String, label: 'Daftar Pustaka',
+        autoform: {type: 'textarea', rows: 12},
+        optional: true
+      }
+    },
+    submit: {value: 'Copy'},
+    action: doc => [
+      navigator.clipboard.writeText(doc.reference),
+      alert('Sudah tercopy, silahkan paste di tempat lain.')
+    ],
+    buttons: [{label: 'Tutup', opt: {
+      class: 'is-warning', onclick: x => [
+        delete state.referenceList, m.redraw()
+      ]
+    }}]
+  })),
+
   // Bank Riset: berkategori
   m('h3', 'Bank Data Sitasi'),
   m(autoTable({
@@ -184,7 +207,7 @@ comps.research = x => [
       open: 'Lihat',
       group: 'Group', title: 'Judul',
       authors: 'Penulis', year: 'Tahun',
-      journal: 'Jurnal',
+      journal: 'Penerbit',
       remove: 'Hapus'
     },
     rows: Object.entries(JSON.parse(
@@ -199,7 +222,11 @@ comps.research = x => [
           rec.journal?.year, // artikel
           rec.date && (new Date(rec.date)).getYear() + 1900 // web
         ]),
-        journal: rec.journal?.name,
+        // journal: rec.journal?.name,
+        journal: ors([
+          rec.journal?.name, // kalau jurnal
+          rec.publisher // kalau buku
+        ]),
         authors: (rec.authors || [])
           .map(i => i.lastName).join(', '),
         open: m(
@@ -228,19 +255,19 @@ comps.research = x => [
     onclick: x => null,
     buttons: [
       {label: 'MLA', opt: rows => ({
-        onclick: x => console.log(
+        onclick: x => _.assign(state, {referenceList:
           rows.map(item => withAs(
             Object.values(item.data)[0],
             source => ({
               // lastName, firstName. "articleTitle". journalTitle, volNumber, issueNumber (year): pageNumber
               'Artikel': `${source.authors[0].lastName}, ${source.authors[0].firstName}. "${source.title}". ${source.journal?.name}, ${source.journal?.volume}, ${source.journal?.issue} (${source.journal?.year}): ${source.journal?.page}`,
               // lastName, firstName. bookTitle. place. publisher, year
-              'Buku': `${source.authors[0].lastName} ${source.authors[0].firstName}. ${source.title}. ${source.city}. ${source.publisher}, ${source.year}.`,
+              'Buku': `${source.authors[0].lastName}, ${source.authors[0].firstName}. ${source.title}. ${source.city}. ${source.publisher}, ${source.year}.`,
               // lastName, firstName(ops). "pageTitle". websiteName, date(ops). linkURL, accessDate.
-              'Web': `${source.authors[0].lastName}, ${source.authors[0].firstName}. "${source.title}". ${source.name}, ${source.date}. ${source.url}, ${source.access}`
+              'Web': `${source.authors[0].lastName}, ${source.authors[0].firstName}. "${source.title}". ${source.name}, ${new Date(source.date).toLocaleDateString('en-gb')}. ${source.url}, ${new Date(source.access).toLocaleDateString()}`
             })[source.type]
           ))
-        )
+        }) && m.redraw()
       })}
     ]
   }))
