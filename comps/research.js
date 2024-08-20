@@ -2,7 +2,7 @@ comps.research = x => [
   m('p', 'Sedang dalam pengembangan'),
   // Form input: buku, artikel, web
 
-  m('h3', 'Tambah Sitasi'),
+  m('h3', `${state.openCiteContent ? 'Edit' : 'Tambah'} Sitasi`),
 
   !state.citeType ? m(autoForm({
     id: 'citeType',
@@ -170,6 +170,7 @@ comps.research = x => [
         onclick: e => [
           e.preventDefault(),
           delete state.citeType,
+          delete state.openCiteContent,
           m.redraw()
         ]
       }}
@@ -177,7 +178,7 @@ comps.research = x => [
   })),
 
   // Generated Daftar Pustaka
-  ors([state.referenceList]) && m(autoForm({
+  state.referenceList && m(autoForm({
     id: 'references',
     doc: {reference: state.referenceList.join('\n\n')},
     schema: {
@@ -203,6 +204,7 @@ comps.research = x => [
   m('h3', 'Bank Data Sitasi'),
   m(autoTable({
     id: 'citations',
+    search: true,
     heads: {
       open: 'Lihat',
       group: 'Group', title: 'Judul',
@@ -255,6 +257,7 @@ comps.research = x => [
     onclick: x => null,
     buttons: [
       {label: 'MLA', opt: rows => ({
+        class: 'is-primary',
         onclick: x => _.assign(state, {referenceList:
           rows.map(item => withAs(
             Object.values(item.data)[0],
@@ -268,7 +271,9 @@ comps.research = x => [
             })[source.type]
           ))
         }) && m.redraw()
-      })}
+      })},
+      // TODO: APA version
+      // TODO: HRV version
     ]
   }))
 
