@@ -1,7 +1,5 @@
 comps.research = x => [
-  m('p', 'Sedang dalam pengembangan'),
   // Form input: buku, artikel, web
-
   m('h3', `${state.openCiteContent ? 'Edit' : 'Tambah'} Sitasi`),
 
   !state.citeType ? m(autoForm({
@@ -300,18 +298,25 @@ comps.research = x => [
           autoform: {type: 'textarea'}
         }
       },
+      submit: {value: 'Tanyakan'},
       action: doc => [
         (new state.aiModule.GoogleGenerativeAI(randomGemini()))
         .getGenerativeModel({model: 'gemini-1.5-flash'})
         .generateContent(promptRQA(state.bahanDiskusi, doc.question))
         .then(result => withAs(
           result.response.text(), answer => [
-            localStorage.setItem('researchQA', answer),
-            m.redraw()
+            localStorage.setItem('researchQA', `
+              ${doc.question} \n\n ${answer}
+            `), m.redraw()
           ]
         ))
       ]
-    }))
+    })),
+    localStorage.researchQA && m('article.message',
+      m('.message-body', m('p', m.trust(marked.parse(
+        localStorage.researchQA
+      ))))
+    )
   ]
 ]
 
