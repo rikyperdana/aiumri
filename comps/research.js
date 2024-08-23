@@ -1,4 +1,6 @@
 comps.research = x => [
+  m('p', 'Sedang dalam pengembangan..'),
+
   // Form input: buku, artikel, web
   m('h3', `${state.openCiteContent ? 'Edit' : 'Tambah'} Sitasi`),
 
@@ -105,6 +107,10 @@ comps.research = x => [
         'authors.$': {type: Object, label: 'Penulis'},
         'authors.$.firstName': {type: String, label: 'Nama pangkal'},
         'authors.$.lastName': {type: String, label: 'Nama akhir'},
+        content: {
+          type: String, label: 'Konten penting dalam situs ini',
+          autoform: {type: 'textarea'}
+        }
       }
     })[state.citeType],
 
@@ -137,7 +143,7 @@ comps.research = x => [
       'Web': {
         top: [
           ['group'], ['title', 'name'], ['url'],
-          ['date', 'access'], ['authors']
+          ['date', 'access'], ['authors'], ['content']
         ],
         'authors.$': [['firstName', 'lastName']]
       }
