@@ -25,12 +25,12 @@ comps.aichat = x => [
     id: 'aichat',
     schema: {message: {
       type: String, label: ' ',
-      autoform: {
+      optional: true, autoform: {
         type: 'textarea', loading: state.isLoading,
         placeholder: 'Pertanyaan'
       },
     }},
-    action: doc => withAs({
+    action: doc => doc.message && withAs({
       threads: JSON.parse(localStorage.threads || '[]'),
       query: {...doc, role: 'user', requestTime: +(new Date())}
     }, ({threads, query, key}) => [

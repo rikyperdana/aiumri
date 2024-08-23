@@ -276,10 +276,48 @@ comps.research = x => [
             'Web': `${source.authors[0].lastName}, ${source.authors[0].firstName.slice(0,1)}. (${new Date(source.date).toLocaleDateString()}). ${source.title}. ${source.url}`
           })[source.type])
         ).sort((a, b) => a.localeCompare(b))})
+        && m.redraw()
+      })},
+      {label: 'Diskusikan', opt: rows => ({
+        class: 'is-info',
+        onclick: x => _.assign(state, {
+          discussAI: true, bahanDiskusi: rows.map(
+            i => Object.values(i.data)[0]
+          )
+        }) && m.redraw()
       })}
-      // TODO: HRV version
     ]
-  }))
+  })),
 
   // Diskusikan dengan AI
+  state.discussAI && [
+    m('h3', 'Diskusikan dengan AI'),
+    m(autoForm({
+      id: 'researchDiscuss',
+      schema: {
+        question: {
+          type: String, label: 'Pertanyaan',
+          autoform: {type: 'textarea'}
+        }
+      },
+      action: doc => [
+        (new state.aiModule.GoogleGenerativeAI(randomGemini()))
+        .getGenerativeModel({model: 'gemini-1.5-flash'})
+        .generateContent(promptRQA(state.bahanDiskusi, doc.question))
+        .then(result => withAs(
+          result.response.text(), answer => [
+            localStorage.setItem('researchQA', answer),
+            m.redraw()
+          ]
+        ))
+      ]
+    }))
+  ]
 ]
+
+const promptRQA = (material, question) => `
+  Please consider this set of citations:
+  \n ${JSON.stringify(material, null, 2)}
+  \n Then answer the following question:
+  \n ${question}
+`
