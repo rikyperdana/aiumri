@@ -1,4 +1,19 @@
 const
+modulAPI = m('.box', [
+  m('h4', 'Gemini API'),
+  m(autoForm({
+    id: 'geminiAPI',
+    doc: JSON.parse(localStorage.geminiAPI || '[]'),
+    schema: {api: {type: String, autoform: {
+      help: 'Belum punya? Ambil disini => https://aistudio.google.com/apikey'
+    }}},
+    submit: {value: 'Simpan'},
+    action: doc => localStorage.setItem(
+      'geminiAPI', JSON.stringify(doc)
+    )
+  }))
+]),
+
 modulPilihanTema = m('.box', [
   m('h4', 'Tema Aplikasi'),
   m(autoForm({
@@ -116,6 +131,7 @@ modulUkuranFont = m('.box', [
 
 comps.settings = x => [
   m('h3', 'Pengaturan'),
+  modulAPI,
   m('.columns', [
     m('.column', modulPilihanTema),
     m('.column', modulUkuranFont)

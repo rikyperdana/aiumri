@@ -114,7 +114,7 @@ autoForm = opts => ({view: () => {
 
     // function to determine the length of an array input
     arrLen: (name, type) => ({onclick: () => {
-      // afState.arrLen[name] = _.get(afState.arrLen, name) || 0
+      afState.arrLen[name] = _.get(afState.arrLen, name) || 0
       afState.arrLen[name] = ors([
         _.get(afState.arrLen, name),
         _.get(opts.doc, name)?.length

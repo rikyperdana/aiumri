@@ -8,6 +8,7 @@ m.mount(document.body, mitGen({
     knowledge: {full: 'Pohon Ilmu', icon: 'tree', comp: comps.knowledge},
     research: {full: 'Teman Riset', icon: 'book-reader', comp: comps.research},
     guide: {full: 'Panduan', icon: 'chalkboard-teacher', comp: comps.guide},
+    notes: {full: 'Catatan', icon: 'archive', comp: comps.notes},
     settings: {full: 'Pengaturan', icon: 'gear', comp: comps.settings},
   }
 }))

@@ -21,7 +21,10 @@ comps.aichat = x => [
   )),
 
   // Prompt Input
-  state.aiModule && m(autoForm({
+  !ands([
+    state.aiModule, localStorage.geminiAPI
+  ]) ? m('p', 'Pastikan Gemini API tersedia di Pengaturan.')
+  : m(autoForm({
     id: 'aichat',
     schema: {message: {
       type: String, label: ' ',
@@ -38,8 +41,9 @@ comps.aichat = x => [
       localStorage.setItem('threads', JSON.stringify([
         ...threads, query, {message: '...berfikir', role: 'model'}
       ])),
-      (new state.aiModule.GoogleGenerativeAI(randomGemini()))
-      .getGenerativeModel({model: 'gemini-1.5-flash'})
+      (new state.aiModule.GoogleGenerativeAI(
+        JSON.parse(localStorage.geminiAPI).api
+      )).getGenerativeModel({model: 'gemini-1.5-flash'})
       .startChat({
         generateConfig: {maxOutputTokens: 100},
         history: threads.map(thread => ({
