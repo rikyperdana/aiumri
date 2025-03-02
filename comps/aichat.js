@@ -23,7 +23,7 @@ comps.aichat = x => [
   // Prompt Input
   !ands([
     state.aiModule, localStorage.geminiAPI
-  ]) ? m('p', 'Pastikan Gemini API tersedia di Pengaturan.')
+  ]) ? m('p', 'Pastikan Kode API tersedia di Pengaturan.')
   : m(autoForm({
     id: 'aichat',
     schema: {message: {

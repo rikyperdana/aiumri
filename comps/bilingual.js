@@ -15,7 +15,10 @@ comps.bilingual = x => [
   )),
 
   // Prompt Form
-  m(autoForm({
+  !ands([
+    state.aiModule, localStorage.geminiAPI
+  ]) ? m('p', 'Pastikan Kode API tersedia di Pengaturan.')
+  : m(autoForm({
     id: 'bilingual',
     schema: {
       target: {
@@ -37,8 +40,9 @@ comps.bilingual = x => [
     submit: {value: 'Translate'},
     action: doc => [
       Object.assign(state, {isLoading: true}),
-      (new state.aiModule.GoogleGenerativeAI(randomGemini()))
-      .getGenerativeModel({model: 'gemini-1.5-flash'})
+      (new state.aiModule.GoogleGenerativeAI(
+        JSON.parse(localStorage.geminiAPI).api
+      )).getGenerativeModel({model: 'gemini-1.5-flash'})
       .generateContent(`
         Please translate the following text to ${doc.target}
         with no entailing details. "${doc.message}"

@@ -12,7 +12,10 @@ comps.knowledge = x => [
     ])
   ),
 
-  m(autoForm({
+  !ands([
+    state.aiModule, localStorage.geminiAPI
+  ]) ? m('p', 'Pastikan Kode API tersedia di Pengaturan.')
+  : m(autoForm({
     id: 'knowledge',
     schema: {topic: {
       type: String, autoform: {
@@ -26,8 +29,9 @@ comps.knowledge = x => [
     },
     action: doc => [
       Object.assign(state, {isLoading: true}),
-      (new state.aiModule.GoogleGenerativeAI(randomGemini()))
-      .getGenerativeModel({model: 'gemini-1.5-flash'})
+      (new state.aiModule.GoogleGenerativeAI(
+        JSON.parse(localStorage.geminiAPI).api
+      )).getGenerativeModel({model: 'gemini-1.5-flash'})
       .generateContent(`
         Please create a deeply nested object in JSON format
         that best represents the knowledge about "${doc.topic}"
