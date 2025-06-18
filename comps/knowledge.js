@@ -31,7 +31,7 @@ comps.knowledge = x => [
       Object.assign(state, {isLoading: true}),
       (new state.aiModule.GoogleGenerativeAI(
         JSON.parse(localStorage.geminiAPI).api
-      )).getGenerativeModel({model: 'gemini-1.5-flash'})
+      )).getGenerativeModel({model: 'gemini-2.5-flash'})
       .generateContent(`
         Please create a deeply nested object in JSON format
         that best represents the knowledge about "${doc.topic}"

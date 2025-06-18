@@ -307,7 +307,7 @@ comps.research = x => [
       submit: {value: 'Tanyakan'},
       action: doc => [
         (new state.aiModule.GoogleGenerativeAI(randomGemini()))
-        .getGenerativeModel({model: 'gemini-1.5-flash'})
+        .getGenerativeModel({model: 'gemini-2.5-flash'})
         .generateContent(promptRQA(state.bahanDiskusi, doc.question))
         .then(result => withAs(
           result.response.text(), answer => [

@@ -42,7 +42,7 @@ comps.bilingual = x => [
       Object.assign(state, {isLoading: true}),
       (new state.aiModule.GoogleGenerativeAI(
         JSON.parse(localStorage.geminiAPI).api
-      )).getGenerativeModel({model: 'gemini-1.5-flash'})
+      )).getGenerativeModel({model: 'gemini-2.5-flash'})
       .generateContent(`
         Please translate the following text to ${doc.target}
         with no entailing details. "${doc.message}"
