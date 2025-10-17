@@ -16,7 +16,11 @@ comps.aichat = x => [
       thread.role === 'user' && 'is-primary'
     ].join(' ')},
     m('.message-body', m('p', m.trust(
-      marked.parse(thread.message)
+      markdownit({html: true})
+      .use(texmath, {
+        engine: katex, delimiters: 'dollars',
+      })
+      .render(thread.message)
     )))
   )),
 
