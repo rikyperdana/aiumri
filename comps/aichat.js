@@ -43,7 +43,7 @@ comps.aichat = x => [
       ])),
       (new state.aiModule.GoogleGenerativeAI(
         JSON.parse(localStorage.geminiAPI).api
-      )).getGenerativeModel({model: 'gemini-2.5-flash'})
+      )).getGenerativeModel({model: 'gemini-2.5-flash-lite'})
       .startChat({
         generateConfig: {maxOutputTokens: 100},
         history: threads.map(thread => ({
